@@ -1,0 +1,21 @@
+﻿<? Phpr_View::begin_block('view') ?>
+	<h2 class="offset-top-small">Vimeo Tool Configuration</h2>
+
+	<? if(!isset($fatalError)): ?>
+		<div class="form-500">
+			<?= Phpr_Form::open_tag(array('id' => 'form_element')) ?>
+				<? $this->form_render($form_model) ?>
+
+				<?= backend_ajax_button('Authenticate', 'index_onSave', array(), "loadIndicator: {hideOnSuccess: true}, update: 'formFlash'") ?>
+				<?= backend_ajax_button('Save', 'edit_onSave', array('class'=>'default')) ?>
+			<?= Phpr_Form::close_tag() ?>
+		</div>
+	
+		<? if ($authenticated) : ?>
+			<p> congrats you're authenticated! </p>
+		<? endif ?>
+		
+	<? else: ?>
+		<?= flash() ?>
+	<? endif ?>
+<? Phpr_View::end_block() ?>
