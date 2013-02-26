@@ -12,7 +12,7 @@ Clone this repository into modules/ in the root directory of your Lemonstand app
 
 Vimeo Tool uses a git submodule for the Vimeo PHP library (https://github.com/vimeo/vimeo-php-lib) so be sure to init that before using or you won't get very far.
 
-	git submodule init
+	git submodule init && git submodule update
 
 The Vimeo Tool module will add a settings page to System > Settings > CMS in the Lemonstand backend where you will enter your Consumer Key and Consumer Secret. You can create these for your application here: https://developer.vimeo.com/apps
 
