@@ -22,23 +22,29 @@ After entering your Consumer Key and Consumer Secret, click the 'Authenticate' b
 
 Grabbing a list of all your uploaded videos:
 
+```php
 	<?php $results = VimeoTool_Request::create()->send_request('vimeo.videos.getUploaded'); ?>
+```
 
 Looping through all the results and sending them to a partial:
 
+```php
 	<? foreach ($results->videos->video as $key=>$video ) : ?>
 		<div>
 			<? $this->render_partial('vimeo:video_container', array( 'video' => $video, 'width' => 200, 'height' => 134) ) ?>
 		</div>
 	<? endforeach; ?>
+```
 
 This renders the partial 'vimeo:video_container' for each video returned. The contents of 'vimeo:video_container' is as follows:
 
+```php
 	<div class="video">
 		<iframe src="http://player.vimeo.com/video/<?= $video->id ?>" width="<?= $width ?>" height="<?= $height ?>" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 	</div>
 	<h1><?= $video->title ?></h1>
 	<p><?= date('F d, Y', strtotime($video->upload_date))  ?></p>
+```
 
 The response objects for other requests are documented here: https://developer.vimeo.com/apis/advanced#php-response-format
 
