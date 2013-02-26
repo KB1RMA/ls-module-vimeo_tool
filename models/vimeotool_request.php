@@ -2,10 +2,14 @@
 
 	class VimeoTool_Request {
 	
+		// Expose the raw API if someone wants it
+		public $vimeo;
+
 		private $configuration;
-		private $vimeo;
 		private $lastresponse;
 		private $lasterror;
+		private $cache;
+		private $useCache = false;
 		
 		// Default params to be populated in the construct
 		private $params = array();
@@ -14,6 +18,11 @@
 			
 			// Load the configuration class
 			$this->configuration = VimeoTool_Configuration::create();
+
+			if ( $this->configuration->caching ) {
+				$this->cache = Core_CacheBase::create();
+				$this->useCache = true;
+			}
 		
 			// Include the vimeo library
 			require_once( __DIR__ . "/../vendor/php-vimeo/vimeo.php" );
@@ -37,7 +46,26 @@
 			return $this;
 		}
 	
-		public function send_request( $method = '' ) {
+		public function send_request( $method = '', $recache = false ) {
+			
+			if ( $this->useCache ) {
+				$key = 'vimeo_tool_' . str_replace(".", "", $method);
+				
+				$this->cache->create_key($key, $recache);
+				$response = $this->cache->get($key);
+
+				if ( !$response || $recache ) {
+					$response = $this->vimeo->call( $method, $this->params );
+					$this->cache->set($key, $response);
+					return $response;
+				}
+
+				return $response;
+			}	
+
+			var_dump('no cache');
+
+			// If we're not caching anything
 			return $this->vimeo->call( $method, $this->params );
 		}
 

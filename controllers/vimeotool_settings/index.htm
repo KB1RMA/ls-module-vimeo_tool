@@ -7,7 +7,7 @@
 				<? $this->form_render($form_model) ?>
 
 				<?= backend_ajax_button('Authenticate', 'index_onSave', array(), "loadIndicator: {hideOnSuccess: true}, update: 'formFlash'") ?>
-				<?= backend_ajax_button('Save', 'edit_onSave', array('class'=>'default')) ?>
+				<?= backend_ajax_button('Save', 'index_onSave', array('class'=>'default'), "loadIndicator: {hideOnSuccess: true}, update: 'formFlash'") ?>
 			<?= Phpr_Form::close_tag() ?>
 		</div>
 	

@@ -24,7 +24,7 @@ class VimeoTool_Configuration extends Core_Configuration_Model	{
 	
 	protected function init_config_data() {
 		
-		$this->caching = 1;
+		$this->caching = true;
 		$this->callback = Cms_Html::site_url('/backdoor/vimeotool/settings/authenticate');
 
 	}
