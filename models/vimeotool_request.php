@@ -63,8 +63,6 @@
 				return $response;
 			}	
 
-			var_dump('no cache');
-
 			// If we're not caching anything
 			return $this->vimeo->call( $method, $this->params );
 		}
