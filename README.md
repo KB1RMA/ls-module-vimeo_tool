@@ -8,13 +8,15 @@ Documentation for the vimeo api can be found here: https://developer.vimeo.com/a
 
 Clone this repository into modules/ in the root directory of your Lemonstand application
 
-	git clone git://github.com/KB1RMA/vimeo_tool.git modules/vimeotool
+	git clone git://github.com/KB1RMA/ls-module-vimeo_tool.git modules/vimeotool
 
 Vimeo Tool uses a git submodule for the Vimeo PHP library (https://github.com/vimeo/vimeo-php-lib) so be sure to init that before using or you won't get very far.
 
 	git submodule init && git submodule update
 
 The Vimeo Tool module will add a settings page to System > Settings > CMS in the Lemonstand backend where you will enter your Consumer Key and Consumer Secret. You can create these for your application here: https://developer.vimeo.com/apps
+
+![Vimeo Settings](resources/img/vimeo_tool_settings_1.png)
 
 After entering your Consumer Key and Consumer Secret, click the 'Authenticate' button and you'll be sent off to Vimeo to grant access. When you return, if all went well, your store will be authenticated and you can now use the class in your partials/pages.
 
