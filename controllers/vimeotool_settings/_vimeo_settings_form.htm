@@ -1,0 +1,11 @@
+<?= Phpr_Form::open_tag(array('id' => 'form_element')) ?>
+	<?= flash() ?>
+	<? $this->form_render($form_model) ?>
+
+	<? if ($authenticated) : ?>
+	<div class="button"><a><em>authenticated</em></a></div>
+	<? else : ?>
+	<?= backend_ajax_button('Authenticate', 'index_onAuthenticate', array(), "loadIndicator: {hideOnSuccess: true}, update: 'vimeo-form'") ?>
+	<? endif ?>
+	<?= backend_ajax_button('Save', 'index_onSave', array('class'=>'default'), "loadIndicator: {hideOnSuccess: true}, update: 'formFlash'") ?>
+<?= Phpr_Form::close_tag() ?>
