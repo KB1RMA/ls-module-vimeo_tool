@@ -52,21 +52,28 @@ class VimeoTool_Settings extends Backend_SettingsController {
 		}
 		
 	}
+
+	protected function index_onAuthenticate() {
+		Phpr::$response->redirect( url('/vimeotool/settings/authenticate/') );
+	}
 	
 	public function authenticate() {
 		
 		$configuration = VimeoTool_Configuration::create();
-	
-		$this->_load_vimeo();
-		
+
 		$token = Phpr::$request->get_value_array('oauth_token');
 		
 		// If token isn't sent, redirect to the vimeo authentication link		
 		if ( empty($token) ) {
+		
+			// Wipe out any stale request tokens if we're re authenticating
+			$configuration->token = '';
+			$configuration->token_secret = '';
+
+			$this->_load_vimeo();
 
 			// Create request token and save	
 			$requestToken = $this->vimeo->getRequestToken( 'http://creatingsuperkids.local.keyedupmedia.com/backdoor/vimeotool/settings/authenticate/' );
-
 			$configuration->token = $requestToken['oauth_token'];
 			$configuration->token_secret = $requestToken['oauth_token_secret'];
 			$configuration->save();
@@ -75,6 +82,8 @@ class VimeoTool_Settings extends Backend_SettingsController {
 			Phpr::$response->redirect( $this->vimeo->getAuthorizeUrl( $configuration->token, 'write') );		
 			return;
 		}
+
+		$this->_load_vimeo();
 	
 		// Exchange request token for access token and save
 		$accessToken = $this->vimeo->getAccessToken( Phpr::$request->get_value_array('oauth_verifier') );
